@@ -10,6 +10,8 @@ public record TenantResponse(
 
         Long id,
 
+        String employeeCode,
+
         String tenantCode,
 
         String tenantName,

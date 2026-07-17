@@ -60,10 +60,18 @@ public class TenantServiceImpl implements TenantService {
      */
     private void validateTenant(CreateTenantRequest request) {
 
-        if (tenantRepository.existsByTenantCode(request.tenantCode())) {
+       /* if (tenantRepository.existsByTenantCode(request.tenantCode())) {
 
             throw new ResourceAlreadyExistsException(
                     "Tenant Code already exists."
+            );
+
+        }*/
+
+        if (tenantRepository.existsByEmployeeCode(request.employeeCode())) {
+
+            throw new ResourceAlreadyExistsException(
+                    "Tenant Employee Code already exists."
             );
 
         }

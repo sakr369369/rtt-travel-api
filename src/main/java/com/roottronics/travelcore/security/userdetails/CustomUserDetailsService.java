@@ -3,8 +3,8 @@ package com.roottronics.travelcore.security.userdetails;
 import com.roottronics.travelcore.user.entity.AppUser;
 import com.roottronics.travelcore.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,14 +26,31 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() ->
                         new UsernameNotFoundException("Invalid email or password"));
 
-        return new User(
+        List<GrantedAuthority> authorities = List.of(
+                new SimpleGrantedAuthority(
+                        "ROLE_" + appUser.getUserType().name()
+                )
+        );
+
+
+        return new CustomUserDetails(
+
+                appUser.getId(),
+
+                appUser.getTenantId(),
+
+                appUser.getCompanyId(),
+
+                appUser.getEmployeeCode(),
+
                 appUser.getEmail(),
+
                 appUser.getPassword(),
-                appUser.getEnabled(),
-                appUser.getAccountNonExpired(),
-                appUser.getCredentialsNonExpired(),
-                appUser.getAccountNonLocked(),
-                List.of(new SimpleGrantedAuthority(appUser.getUserType().name()))
+
+                appUser.getUserType(),
+
+                authorities
+
         );
 
     }

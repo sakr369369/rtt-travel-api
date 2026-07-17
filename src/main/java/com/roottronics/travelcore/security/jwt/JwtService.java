@@ -52,8 +52,14 @@ public class JwtService {
 
         claims.put(JwtConstants.CLAIM_EMAIL, appUser.getEmail());
 
+        claims.put(JwtConstants.CLAIM_TENANT_ID, appUser.getTenantId());
+        claims.put(JwtConstants.CLAIM_COMPANY_ID, appUser.getCompanyId());
+
         claims.put(JwtConstants.CLAIM_USER_TYPE,
                 appUser.getUserType().name());
+
+        claims.put(JwtConstants.CLAIM_EMPLOYEE_CODE,
+                appUser.getEmployeeCode());
 
         claims.put(JwtConstants.CLAIM_AUTHORITIES,
                 getAuthorities(userDetails.getAuthorities()));

@@ -16,7 +16,8 @@ public class TenantMapper {
 
         Tenant tenant = new Tenant();
 
-        tenant.setTenantCode(request.tenantCode());
+        //tenant.setTenantCode(request.tenantCode());
+        tenant.setEmployeeCode(request.employeeCode());
         tenant.setTenantName(request.tenantName());
         tenant.setContactPerson(request.contactPerson());
         tenant.setEmail(request.email());
@@ -38,7 +39,8 @@ public class TenantMapper {
 
         return TenantResponse.builder()
                 .id(tenant.getId())
-                .tenantCode(tenant.getTenantCode())
+                //.tenantCode(tenant.getTenantCode())
+                .employeeCode(tenant.getEmployeeCode())
                 .tenantName(tenant.getTenantName())
                 .contactPerson(tenant.getContactPerson())
                 .email(tenant.getEmail())

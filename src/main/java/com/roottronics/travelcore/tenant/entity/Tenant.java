@@ -14,8 +14,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Tenant extends BaseEntity {
 
-    @Column(nullable = false, unique = true, length = 20)
-    private String tenantCode;
+   /* @Column(nullable = false, unique = true, length = 20)
+    private String tenantCode;*/
+
+    private String employeeCode;
 
     @Column(nullable = false, length = 150)
     private String tenantName;

@@ -18,6 +18,12 @@ public final class JwtConstants {
 
     public static final String CLAIM_USER_TYPE = "userType";
 
+    public static final String CLAIM_TENANT_ID = "tenantId";
+
+    public static final String CLAIM_COMPANY_ID = "companyId";
+
+    public static final String CLAIM_EMPLOYEE_CODE = "employeeCode";
+
     public static final String CLAIM_EMAIL = "email";
 
     public static final String ISSUER = "RTTTravelCore";

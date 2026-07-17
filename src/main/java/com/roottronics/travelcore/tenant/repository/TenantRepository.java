@@ -9,7 +9,9 @@ import java.util.Optional;
 
 public interface TenantRepository extends JpaRepository<Tenant, Long> {
 
-    Optional<Tenant> findByTenantCode(String tenantCode);
+    //Optional<Tenant> findByTenantCode(String tenantCode);
+
+    Optional<Tenant> findByEmployeeCode(String employeeCode);
 
     Optional<Tenant> findByTenantName(String tenantName);
 
@@ -17,7 +19,9 @@ public interface TenantRepository extends JpaRepository<Tenant, Long> {
 
     Optional<Tenant> findByMobile(String mobile);
 
-    boolean existsByTenantCode(String tenantCode);
+    //boolean existsByTenantCode(String tenantCode);
+
+    boolean existsByEmployeeCode(String employeeCode);
 
     boolean existsByTenantName(String tenantName);
 

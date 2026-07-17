@@ -7,9 +7,13 @@ import jakarta.validation.constraints.Size;
 
 public record CreateTenantRequest(
 
-        @NotBlank(message = "Tenant Code is required")
+        /*@NotBlank(message = "Tenant Code is required")
         @Size(max = 20, message = "Tenant Code must not exceed 20 characters")
-        String tenantCode,
+        String tenantCode,*/
+
+        //Long tenantId,
+
+        String employeeCode,
 
         @NotBlank(message = "Tenant Name is required")
         @Size(max = 150, message = "Tenant Name must not exceed 150 characters")
