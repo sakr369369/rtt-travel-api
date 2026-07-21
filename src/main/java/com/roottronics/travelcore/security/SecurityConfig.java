@@ -4,9 +4,10 @@ import com.roottronics.travelcore.security.handler.JwtAuthenticationEntryPoint;
 import com.roottronics.travelcore.security.jwt.JwtAuthenticationFilter;
 import com.roottronics.travelcore.security.userdetails.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -37,6 +38,9 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     private final CustomUserDetailsService customUserDetailsService;
+
+    @Value("#{'${app.cors.allowed-origins}'.split(',')}")
+    private List<String> allowedOrigins;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -116,12 +120,13 @@ public class SecurityConfig {
         return http.build();
 
     }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        configuration.setAllowedOrigins(allowedOrigins);
         configuration.setAllowedMethods(List.of(
                 "GET",
                 "POST",
@@ -140,6 +145,5 @@ public class SecurityConfig {
 
         return source;
     }
-
 
 }
