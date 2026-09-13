@@ -12,26 +12,23 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     /**
      * Find Company
      */
-    Optional<Company> findByIdAndTenantId(Long id, Long tenantId);
-
-    Optional<Company> findByCompanyCodeAndTenantId(String companyCode, Long tenantId);
 
     /**
      * Duplicate Validations
      */
-    boolean existsByCompanyCodeAndTenantId(String companyCode, Long tenantId);
+    boolean existsByCompanyCode(String companyCode);
 
-    boolean existsByCompanyNameAndTenantId(String companyName, Long tenantId);
+    boolean existsByCompanyName(String companyName);
 
-    boolean existsByEmailAndTenantId(String email, Long tenantId);
+    boolean existsByEmail(String email);
 
-    boolean existsByMobileAndTenantId(String mobile, Long tenantId);
+    boolean existsByMobile(String mobile);
 
     /**
      * Future APIs
      */
-    List<Company> findAllByTenantId(Long tenantId);
 
-    List<Company> findAllByTenantIdAndStatus(Long tenantId, Status status);
+
+    List<Company> findAllByStatus( Status status);
 
 }

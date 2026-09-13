@@ -8,14 +8,14 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "companies")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Company extends BaseEntity {
 
-    @Column(nullable = false)
-    private Long tenantId;
 
     @Column(nullable = false, unique = true, length = 20)
     private String companyCode;
@@ -46,5 +46,11 @@ public class Company extends BaseEntity {
 
     @Column(nullable = false)
     private Status status = Status.ACTIVE;
+
+    @Column(length = 100)
+    private LocalDateTime createdDate;
+
+    @Column(length = 100)
+    private LocalDateTime updatedDate;
 
 }

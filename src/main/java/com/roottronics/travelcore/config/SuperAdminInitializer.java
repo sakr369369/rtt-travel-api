@@ -68,7 +68,6 @@ public class SuperAdminInitializer implements ApplicationRunner {
 
         AppUser admin = new AppUser();
 
-        //admin.setTenantId(1L);
 
         //admin.setCompanyId(1L);
 

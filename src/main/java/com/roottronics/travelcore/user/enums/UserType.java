@@ -4,8 +4,6 @@ public enum UserType {
 
     SUPER_ADMIN,
 
-    TENANT_ADMIN,
-
     COMPANY_ADMIN,
 
     HR,

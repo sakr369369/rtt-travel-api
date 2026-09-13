@@ -9,11 +9,10 @@ import com.roottronics.travelcore.candidate.service.CandidateService;
 import com.roottronics.travelcore.exception.BadRequestException;
 import com.roottronics.travelcore.company.entity.Company;
 import com.roottronics.travelcore.company.repository.CompanyRepository;
-import com.roottronics.travelcore.security.userdetails.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,54 +27,33 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     public CandidateResponse createCandidate(CreateCandidateRequest request) {
 
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
-
-        CustomUserDetails currentUser =
-                (CustomUserDetails) authentication.getPrincipal();
-
-        Long tenantId = currentUser.getTenantId();
-
         Company company = companyRepository.findById(request.companyId())
                 .orElseThrow(() ->
                         new BadRequestException("Company not found."));
 
-        if (!company.getTenantId().equals(tenantId)) {
-            throw new BadRequestException(
-                    "Company does not belong to the logged-in tenant.");
-        }
-
         candidateRepository
-                .findByCandidateCodeAndTenantId(
-                        request.candidateCode(),
-                        tenantId)
+                .findByCandidateCode(request.candidateCode())
                 .ifPresent(candidate -> {
                     throw new BadRequestException(
                             "Candidate Code already exists.");
                 });
 
         candidateRepository
-                .findByPassportNumberAndTenantId(
-                        request.passportNumber(),
-                        tenantId)
+                .findByPassportNumber(request.passportNumber())
                 .ifPresent(candidate -> {
                     throw new BadRequestException(
                             "Passport Number already exists.");
                 });
 
         candidateRepository
-                .findByEmailAndTenantId(
-                        request.email(),
-                        tenantId)
+                .findByEmail(request.email())
                 .ifPresent(candidate -> {
                     throw new BadRequestException(
                             "Email already exists.");
                 });
 
         candidateRepository
-                .findByMobileAndTenantId(
-                        request.mobile(),
-                        tenantId)
+                .findByMobile(request.mobile())
                 .ifPresent(candidate -> {
                     throw new BadRequestException(
                             "Mobile Number already exists.");
@@ -84,13 +62,20 @@ public class CandidateServiceImpl implements CandidateService {
         Candidate candidate =
                 candidateMapper.toEntity(request);
 
-        candidate.setTenantId(tenantId);
-
         Candidate savedCandidate =
                 candidateRepository.save(candidate);
 
         return candidateMapper.toResponse(savedCandidate);
 
+    }
+
+    @Override
+    public List<CandidateResponse> fetchAllCandidates() {
+
+        return candidateRepository.findAll()
+                .stream()
+                .map(candidateMapper::toResponse)
+                .toList();
     }
 
 }

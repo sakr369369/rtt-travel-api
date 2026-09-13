@@ -9,24 +9,12 @@ import java.util.Optional;
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate, Long> {
 
-    Optional<Candidate> findByCandidateCodeAndTenantId(
-            String candidateCode,
-            Long tenantId
-    );
+    Optional<Candidate> findByCandidateCode(String candidateCode);
 
-    Optional<Candidate> findByPassportNumberAndTenantId(
-            String passportNumber,
-            Long tenantId
-    );
+    Optional<Candidate> findByPassportNumber(String passportNumber);
 
-    Optional<Candidate> findByEmailAndTenantId(
-            String email,
-            Long tenantId
-    );
+    Optional<Candidate> findByEmail(String email);
 
-    Optional<Candidate> findByMobileAndTenantId(
-            String mobile,
-            Long tenantId
-    );
+    Optional<Candidate> findByMobile(String mobile);
 
 }

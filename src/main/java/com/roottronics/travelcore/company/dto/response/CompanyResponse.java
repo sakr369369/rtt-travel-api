@@ -10,8 +10,6 @@ public record CompanyResponse(
 
         Long id,
 
-        Long tenantId,
-
         String companyCode,
 
         String companyName,

@@ -12,7 +12,6 @@ public interface FileStorageService {
      */
     StoredFile storeFile(
             MultipartFile file,
-            Long tenantId,
             Long companyId,
             Long candidateId,
             String documentType);

@@ -2,6 +2,7 @@ package com.roottronics.travelcore.user.service.impl;
 
 import com.roottronics.travelcore.common.response.BaseResponse;
 import com.roottronics.travelcore.common.enums.Status;
+import com.roottronics.travelcore.security.userdetails.CustomUserDetails;
 import com.roottronics.travelcore.user.dto.request.CreateUserRequest;
 import com.roottronics.travelcore.user.dto.request.UpdateUserRequest;
 import com.roottronics.travelcore.user.dto.response.UserResponse;
@@ -11,6 +12,8 @@ import com.roottronics.travelcore.user.mapper.UserMapper;
 import com.roottronics.travelcore.user.repository.UserRepository;
 import com.roottronics.travelcore.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +35,12 @@ public class UserServiceImpl implements UserService {
         if (repository.existsByEmail(request.email())) {
             throw new RuntimeException("Email already exists");
         }
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        CustomUserDetails currentUser =
+                (CustomUserDetails) authentication.getPrincipal();
+
 
         AppUser appUser = mapper.toEntity(request);
 
