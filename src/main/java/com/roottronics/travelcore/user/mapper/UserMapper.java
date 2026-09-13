@@ -18,7 +18,6 @@ public class UserMapper {
         user.setMobile(request.mobile());
         user.setPassword(request.password());
         user.setUserType(request.userType());
-        //user.setTenantId(request.tenantId());
         //user.setCompanyId(request.companyId());
 
         return user;

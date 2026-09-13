@@ -52,10 +52,9 @@ public class CandidateDocumentServiceImpl
         CustomUserDetails currentUser =
                 (CustomUserDetails) authentication.getPrincipal();
 
-        Long tenantId = currentUser.getTenantId();
 
         log.info("========== Upload Candidate Document ==========");
-        log.info("Tenant Id       : {}", tenantId);
+
         log.info("Candidate Id    : {}", request.candidateId());
         log.info("Document Type Id: {}", request.documentTypeId());
         log.info("Document Number : {}", request.documentNumber());
@@ -91,10 +90,6 @@ public class CandidateDocumentServiceImpl
                 .orElseThrow(() ->
                         new BadRequestException("Candidate not found."));
 
-        if (!candidate.getTenantId().equals(tenantId)) {
-            throw new BadRequestException(
-                    "Candidate does not belong to the logged-in tenant.");
-        }
 
         DocumentType documentType =
                 documentTypeRepository.findById(request.documentTypeId())
@@ -113,19 +108,13 @@ public class CandidateDocumentServiceImpl
                 .orElseThrow(() ->
                         new BadRequestException("Company not found."));
 
-        log.info("Candidate Code  : {}", candidate.getCandidateCode());
+        log.info("Candidate Id  : {}", candidate.getId());
         log.info("Company Id      : {}", company.getId());
         log.info("Document Type   : {}", documentType.getDocumentName());
-
-        if (!company.getTenantId().equals(tenantId)) {
-            throw new BadRequestException(
-                    "Company does not belong to the logged-in tenant.");
-        }
 
         StoredFile storedFile =
                 fileStorageService.storeFile(
                         file,
-                        tenantId,
                         company.getId(),
                         candidate.getId(),
                         documentType.getDocumentCode()
@@ -140,7 +129,6 @@ public class CandidateDocumentServiceImpl
         CandidateDocument document =
                 candidateDocumentMapper.toEntity(request);
 
-        document.setTenantId(tenantId);
 
         document.setCompany(company);
 

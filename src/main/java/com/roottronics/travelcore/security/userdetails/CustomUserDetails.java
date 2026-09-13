@@ -14,8 +14,6 @@ public class CustomUserDetails implements UserDetails {
 
     private final Long userId;
 
-    private final Long tenantId;
-
     private final Long companyId;
 
     private final String employeeCode;

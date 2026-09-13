@@ -12,14 +12,14 @@ public interface CandidateDocumentRepository
         extends JpaRepository<CandidateDocument, Long> {
 
     Optional<CandidateDocument> findByCandidateIdAndDocumentTypeId(
-            Long candidateId,
+            Long id,
             Long documentTypeId
     );
 
-    List<CandidateDocument> findByCandidateId(Long candidateId);
+    List<CandidateDocument> findByCandidateId(Long id);
 
     boolean existsByCandidateIdAndDocumentTypeId(
-            Long candidateId,
+            Long id,
             Long documentTypeId
     );
 

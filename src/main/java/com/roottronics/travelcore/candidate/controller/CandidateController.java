@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/candidates")
 @RequiredArgsConstructor
@@ -37,6 +39,23 @@ public class CandidateController {
                                 response
                         )
                 );
+    }
+
+    /**
+     * Fetch all candidates.
+     */
+    @GetMapping
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','EMPLOYEE')")
+    public ResponseEntity<BaseResponse<List<CandidateResponse>>> fetchAllCandidates() {
+
+        List<CandidateResponse> candidates = candidateService.fetchAllCandidates();
+
+        return ResponseEntity.ok(
+                BaseResponse.success(
+                        "Candidates fetched successfully.",
+                        candidates
+                )
+        );
     }
 
 }

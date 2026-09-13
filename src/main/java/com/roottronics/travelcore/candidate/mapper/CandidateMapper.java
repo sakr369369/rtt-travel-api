@@ -51,11 +51,10 @@ public class CandidateMapper {
 
                 .id(candidate.getId())
 
-                .tenantId(candidate.getTenantId())
+                .candidateCode(candidate.getCandidateCode())
 
                 .companyId(candidate.getCompanyId())
 
-                .candidateCode(candidate.getCandidateCode())
 
                 .firstName(candidate.getFirstName())
 

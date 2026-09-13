@@ -24,7 +24,6 @@ public class LocalFileStorageService
     @Override
     public StoredFile storeFile(
             MultipartFile file,
-            Long tenantId,
             Long companyId,
             Long candidateId,
             String documentType) {
@@ -53,7 +52,6 @@ public class LocalFileStorageService
 
             Path uploadPath = Paths.get(
                     fileStorageProperties.getUploadDir(),
-                    "tenant-" + tenantId,
                     "company-" + companyId,
                     "candidate-" + candidateId,
                     documentType.toUpperCase()

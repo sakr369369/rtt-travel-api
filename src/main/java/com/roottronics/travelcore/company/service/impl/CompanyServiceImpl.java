@@ -8,13 +8,11 @@ import com.roottronics.travelcore.company.mapper.CompanyMapper;
 import com.roottronics.travelcore.company.repository.CompanyRepository;
 import com.roottronics.travelcore.company.service.CompanyService;
 import com.roottronics.travelcore.exception.ResourceAlreadyExistsException;
-import com.roottronics.travelcore.security.userdetails.CustomUserDetails;
-import com.roottronics.travelcore.security.userdetails.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,19 +26,10 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public CompanyResponse createCompany(CreateCompanyRequest request) {
 
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
-
-        CustomUserDetails currentUser =
-                (CustomUserDetails) authentication.getPrincipal();
-
-        Long tenantId = currentUser.getTenantId();
-
-        validateCompany(request, tenantId);
+        validateCompany(request);
 
         Company company = companyMapper.toEntity(request);
 
-        company.setTenantId(tenantId);
 
         company.setStatus(Status.ACTIVE);
 
@@ -53,12 +42,10 @@ public class CompanyServiceImpl implements CompanyService {
     /**
      * Validate Duplicate Company
      */
-    private void validateCompany(CreateCompanyRequest request,
-                                 Long tenantId) {
+    private void validateCompany(CreateCompanyRequest request ) {
 
-        if (companyRepository.existsByCompanyCodeAndTenantId(
-                request.companyCode(),
-                tenantId)) {
+        if (companyRepository.existsByCompanyCode(
+                request.companyCode())) {
 
             throw new ResourceAlreadyExistsException(
                     "Company Code already exists."
@@ -66,9 +53,8 @@ public class CompanyServiceImpl implements CompanyService {
 
         }
 
-        if (companyRepository.existsByCompanyNameAndTenantId(
-                request.companyName(),
-                tenantId)) {
+        if (companyRepository.existsByCompanyName(
+                request.companyName())) {
 
             throw new ResourceAlreadyExistsException(
                     "Company Name already exists."
@@ -76,9 +62,8 @@ public class CompanyServiceImpl implements CompanyService {
 
         }
 
-        if (companyRepository.existsByEmailAndTenantId(
-                request.email(),
-                tenantId)) {
+        if (companyRepository.existsByEmail(
+                request.email())) {
 
             throw new ResourceAlreadyExistsException(
                     "Email already exists."
@@ -86,9 +71,8 @@ public class CompanyServiceImpl implements CompanyService {
 
         }
 
-        if (companyRepository.existsByMobileAndTenantId(
-                request.mobile(),
-                tenantId)) {
+        if (companyRepository.existsByMobile(
+                request.mobile())) {
 
             throw new ResourceAlreadyExistsException(
                     "Mobile Number already exists."
@@ -96,6 +80,30 @@ public class CompanyServiceImpl implements CompanyService {
 
         }
 
+    }
+
+
+    @Override
+    public List<CompanyResponse> getAllCompanies() {
+
+        return companyRepository.findAll()
+                .stream()
+                .map(company -> CompanyResponse.builder()
+                        .id(company.getId())
+                        .companyCode(company.getCompanyCode())
+                        .companyName(company.getCompanyName())
+                        .contactPerson(company.getContactPerson())
+                        .email(company.getEmail())
+                        .mobile(company.getMobile())
+                        .country(company.getCountry())
+                        .state(company.getState())
+                        .city(company.getCity())
+                        .address(company.getAddress())
+                        .status(company.getStatus())
+                        .createdDate(company.getCreatedDate())
+                        .updatedDate(company.getUpdatedDate())
+                        .build())
+                .toList();
     }
 
 }

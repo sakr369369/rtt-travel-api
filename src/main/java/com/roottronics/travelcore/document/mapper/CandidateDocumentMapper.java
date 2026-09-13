@@ -37,8 +37,6 @@ public class CandidateDocumentMapper {
 
                 .id(document.getId())
 
-                .tenantId(document.getTenantId())
-
                 .companyId(document.getCompany().getId())
 
                 .candidateId(document.getCandidate().getId())

@@ -11,8 +11,6 @@ public record CandidateDocumentResponse(
 
         Long id,
 
-        Long tenantId,
-
         Long companyId,
 
         Long candidateId,

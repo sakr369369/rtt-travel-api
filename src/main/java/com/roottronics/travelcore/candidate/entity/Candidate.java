@@ -13,13 +13,13 @@ import java.time.LocalDate;
         uniqueConstraints = {
 
                 @UniqueConstraint(
-                        name = "uk_candidate_code_tenant",
-                        columnNames = {"candidate_code", "tenant_id"}
+                        name = "uk_candidate_code",
+                        columnNames = {"candidate_code"}
                 ),
 
                 @UniqueConstraint(
-                        name = "uk_candidate_passport_tenant",
-                        columnNames = {"passport_number", "tenant_id"}
+                        name = "uk_candidate_passport",
+                        columnNames = {"passport_number"}
                 )
         }
 )
@@ -30,12 +30,6 @@ import java.time.LocalDate;
 @Builder
 public class Candidate extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "tenant_id", nullable = false)
-    private Long tenantId;
 
     @Column(name = "company_id", nullable = false)
     private Long companyId;

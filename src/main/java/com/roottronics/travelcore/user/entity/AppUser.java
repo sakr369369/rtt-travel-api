@@ -13,8 +13,6 @@ import lombok.Data;
 @Data
 public class AppUser extends BaseEntity {
 
-    private Long tenantId;
-
     private Long companyId;
 
     private String employeeCode;

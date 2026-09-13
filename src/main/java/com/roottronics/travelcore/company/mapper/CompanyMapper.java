@@ -26,9 +26,6 @@ public class CompanyMapper {
         company.setCity(request.city());
         company.setAddress(request.address());
 
-        // tenantId will be set from JWT in Service Layer
-        // company.setTenantId(...);
-
         company.setStatus(Status.ACTIVE);
 
         return company;
@@ -41,7 +38,6 @@ public class CompanyMapper {
 
         return CompanyResponse.builder()
                 .id(company.getId())
-                .tenantId(company.getTenantId())
                 .companyCode(company.getCompanyCode())
                 .companyName(company.getCompanyName())
                 .contactPerson(company.getContactPerson())

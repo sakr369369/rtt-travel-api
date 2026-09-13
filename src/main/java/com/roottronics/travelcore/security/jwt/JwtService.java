@@ -41,6 +41,7 @@ public class JwtService {
     }
 
     /**
+     *
      * Generate JWT Access Token
      */
     public String generateToken(UserDetails userDetails,
@@ -52,7 +53,6 @@ public class JwtService {
 
         claims.put(JwtConstants.CLAIM_EMAIL, appUser.getEmail());
 
-        claims.put(JwtConstants.CLAIM_TENANT_ID, appUser.getTenantId());
         claims.put(JwtConstants.CLAIM_COMPANY_ID, appUser.getCompanyId());
 
         claims.put(JwtConstants.CLAIM_USER_TYPE,

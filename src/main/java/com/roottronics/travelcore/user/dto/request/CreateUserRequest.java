@@ -33,9 +33,5 @@ public record CreateUserRequest(
         @NotNull(message = "User type is required")
         UserType userType
 
-        //Long tenantId
-
-        //Long companyId
-
 ) {
 }

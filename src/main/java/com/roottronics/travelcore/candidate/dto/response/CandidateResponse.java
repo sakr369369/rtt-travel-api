@@ -11,11 +11,9 @@ public record CandidateResponse(
 
         Long id,
 
-        Long tenantId,
+        String candidateCode,
 
         Long companyId,
-
-        String candidateCode,
 
         String firstName,
 

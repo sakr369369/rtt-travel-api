@@ -17,7 +17,6 @@ import java.time.LocalDate;
                 @UniqueConstraint(
                         name = "uk_candidate_document_number",
                         columnNames = {
-                                "tenant_id",
                                 "document_type_id",
                                 "document_number"
                         }
@@ -31,9 +30,6 @@ import java.time.LocalDate;
 @Builder
 public class CandidateDocument extends BaseEntity {
 
-
-    @Column(name = "tenant_id", nullable = false)
-    private Long tenantId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false)

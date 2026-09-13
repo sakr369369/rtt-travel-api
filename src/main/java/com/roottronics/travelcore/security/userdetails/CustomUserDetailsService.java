@@ -37,8 +37,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
                 appUser.getId(),
 
-                appUser.getTenantId(),
-
                 appUser.getCompanyId(),
 
                 appUser.getEmployeeCode(),

@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/companies")
 @RequiredArgsConstructor
@@ -36,5 +38,16 @@ public class CompanyController {
                         )
                 );
     }
+    @GetMapping
+    public ResponseEntity<BaseResponse<List<CompanyResponse>>> getAllCompanies() {
 
+        List<CompanyResponse> companies = companyService.getAllCompanies();
+
+        return ResponseEntity.ok(
+                BaseResponse.success(
+                        "Companies fetched successfully.",
+                        companies
+                )
+        );
+    }
 }
