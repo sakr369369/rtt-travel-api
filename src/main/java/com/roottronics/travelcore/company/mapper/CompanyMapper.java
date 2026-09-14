@@ -54,4 +54,19 @@ public class CompanyMapper {
 
     }
 
+    public void updateEntity(
+            CreateCompanyRequest request,
+            Company company) {
+
+        company.setCompanyCode(request.companyCode());
+        company.setCompanyName(request.companyName());
+        company.setContactPerson(request.contactPerson());
+        company.setEmail(request.email());
+        company.setMobile(request.mobile());
+        company.setCountry(request.country());
+        company.setState(request.state());
+        company.setCity(request.city());
+        company.setAddress(request.address());
+    }
+
 }

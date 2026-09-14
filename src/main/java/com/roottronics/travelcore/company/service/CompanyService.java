@@ -13,4 +13,11 @@ public interface CompanyService {
     CompanyResponse createCompany(CreateCompanyRequest request);
 
     List<CompanyResponse> getAllCompanies();
+
+    CompanyResponse updateCompany(
+            Long companyId,
+            CreateCompanyRequest request
+    );
+
+    void deleteCompany(Long companyId);
 }

@@ -8,6 +8,7 @@ import com.roottronics.travelcore.company.mapper.CompanyMapper;
 import com.roottronics.travelcore.company.repository.CompanyRepository;
 import com.roottronics.travelcore.company.service.CompanyService;
 import com.roottronics.travelcore.exception.ResourceAlreadyExistsException;
+import com.roottronics.travelcore.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,9 +30,6 @@ public class CompanyServiceImpl implements CompanyService {
         validateCompany(request);
 
         Company company = companyMapper.toEntity(request);
-
-
-        company.setStatus(Status.ACTIVE);
 
         Company savedCompany = companyRepository.save(company);
 
@@ -86,24 +84,42 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<CompanyResponse> getAllCompanies() {
 
-        return companyRepository.findAll()
+        return companyRepository.findAllByDeletedFalse()
                 .stream()
-                .map(company -> CompanyResponse.builder()
-                        .id(company.getId())
-                        .companyCode(company.getCompanyCode())
-                        .companyName(company.getCompanyName())
-                        .contactPerson(company.getContactPerson())
-                        .email(company.getEmail())
-                        .mobile(company.getMobile())
-                        .country(company.getCountry())
-                        .state(company.getState())
-                        .city(company.getCity())
-                        .address(company.getAddress())
-                        .status(company.getStatus())
-                        .createdDate(company.getCreatedDate())
-                        .updatedDate(company.getUpdatedDate())
-                        .build())
+                .map(companyMapper::toResponse)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public CompanyResponse updateCompany(
+            Long companyId,
+            CreateCompanyRequest request) {
+
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Company not found with id: " + companyId));
+
+        companyMapper.updateEntity(request, company);
+
+        Company updatedCompany = companyRepository.save(company);
+
+        return companyMapper.toResponse(updatedCompany);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCompany(Long companyId) {
+
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Company not found with id: " + companyId));
+
+        company.setDeleted(true);
+
+        companyRepository.save(company);
     }
 
 }

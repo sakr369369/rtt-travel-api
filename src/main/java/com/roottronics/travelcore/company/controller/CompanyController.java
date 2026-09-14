@@ -50,4 +50,34 @@ public class CompanyController {
                 )
         );
     }
+
+    @PutMapping("/{companyId}")
+    public ResponseEntity<BaseResponse<CompanyResponse>> updateCompany(
+            @PathVariable Long companyId,
+            @Valid @RequestBody CreateCompanyRequest request) {
+
+        CompanyResponse response =
+                companyService.updateCompany(companyId, request);
+
+        return ResponseEntity.ok(
+                BaseResponse.success(
+                        "Company updated successfully.",
+                        response
+                )
+        );
+    }
+
+    @DeleteMapping("/{companyId}")
+    public ResponseEntity<BaseResponse<Void>> deleteCompany(
+            @PathVariable Long companyId) {
+
+        companyService.deleteCompany(companyId);
+
+        return ResponseEntity.ok(
+                BaseResponse.success(
+                        "Company deleted successfully.",
+                        null
+                )
+        );
+    }
 }
