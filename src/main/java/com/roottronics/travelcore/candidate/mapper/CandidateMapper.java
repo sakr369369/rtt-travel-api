@@ -85,4 +85,19 @@ public class CandidateMapper {
                 .build();
     }
 
+    public void updateEntity(CreateCandidateRequest request, Candidate candidate) {
+
+        candidate.setCompanyId(request.companyId());
+        candidate.setCandidateCode(request.candidateCode().trim());
+        candidate.setFirstName(request.firstName().trim());
+        candidate.setLastName(request.lastName());
+        candidate.setGender(request.gender());
+        candidate.setDateOfBirth(request.dateOfBirth());
+        candidate.setPassportNumber(request.passportNumber().trim());
+        candidate.setPassportExpiryDate(request.passportExpiryDate());
+        candidate.setNationality(request.nationality());
+        candidate.setEmail(request.email().trim().toLowerCase());
+        candidate.setMobile(request.mobile().trim());
+        candidate.setAddress(request.address());
+        }
 }
