@@ -58,4 +58,42 @@ public class CandidateController {
         );
     }
 
+    /**
+     * Update Candidate
+     */
+    @PutMapping("/{candidateId}")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','EMPLOYEE')")
+    public ResponseEntity<BaseResponse<CandidateResponse>> updateCandidate(
+            @PathVariable Long candidateId,
+            @Valid @RequestBody CreateCandidateRequest request) {
+
+        CandidateResponse response =
+                candidateService.updateCandidate(candidateId, request);
+
+        return ResponseEntity.ok(
+                BaseResponse.success(
+                        "Candidate updated successfully.",
+                        response
+                )
+        );
+    }
+
+    /**
+     * Soft delete Candidate
+     */
+    @DeleteMapping("/{candidateId}")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','EMPLOYEE')")
+    public ResponseEntity<BaseResponse<Void>> deleteCandidate(
+            @PathVariable Long candidateId) {
+
+        candidateService.deleteCandidate(candidateId);
+
+        return ResponseEntity.ok(
+                BaseResponse.success(
+                        "Candidate deleted successfully.",
+                        null
+                )
+        );
+    }
+
 }

@@ -14,4 +14,10 @@ public interface CandidateService {
 
     List<CandidateResponse> fetchAllCandidates();
 
+    CandidateResponse updateCandidate(
+            Long candidateId,
+            CreateCandidateRequest request);
+
+    void deleteCandidate(Long candidateId);
+
 }

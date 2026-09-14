@@ -67,8 +67,4 @@ public class Candidate extends BaseEntity {
     @Column(name = "address", length = 500)
     private String address;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    @Builder.Default
-    private Status status = Status.ACTIVE;
 }
