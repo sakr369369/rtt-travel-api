@@ -44,9 +44,6 @@ public class Company extends BaseEntity {
     @Column(length = 500)
     private String address;
 
-    @Column(nullable = false)
-    private Status status = Status.ACTIVE;
-
     @Column(length = 100)
     private LocalDateTime createdDate;
 
